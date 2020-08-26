@@ -57,7 +57,7 @@
 <script>
 import NavHeader from '~/components/NavHeader.vue'
 import NavFooter from '~/components/Footer.vue'
-// import {baseurl} from '~/plugins/url.js'
+import {baseurl} from '~/plugins/url.js'
 export default {
 	data() {
 		return {
@@ -66,19 +66,19 @@ export default {
 	},
 	async asyncData({app}) {
 		// 服务器端渲染数据
-		// let json = {page:1,pagesize:5}
-		// let {data} =await app.$axios.get(`${baseurl}/api/article/getFrontArticle`,{params:json});
-		// let {list,count} = data;
-		// let lately = list.slice(0,4);
-		// return {list,count,lately}
+		let json = {page:1,pagesize:5}
+		let {data} =await app.$axios.get(`${baseurl}/api/article/getFrontArticle`,{params:json});
+		let {list,count} = data;
+		let lately = list.slice(0,4);
+		return {list,count,lately}
 	},
 	methods: {
 		pagination(page) {
-			// let json = {page,pagesize:5}
-			// this.$axios.get(`${baseurl}/api/article/getFrontArticle`,{params:json}).then(res=>{
-			// 	let {error,count,list} = res.data;
-			// 	this.list =list;
-			// });
+			let json = {page,pagesize:5}
+			this.$axios.get(`${baseurl}/api/article/getFrontArticle`,{params:json}).then(res=>{
+				let {error,count,list} = res.data;
+				this.list =list;
+			});
 		}
 	},
 	components: {

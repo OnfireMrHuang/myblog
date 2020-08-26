@@ -20,15 +20,12 @@
         <el-col :span="5" :offset="1">
 			<el-card class="about">
 				<div class="about-title">about Me</div>
-				<div class="about-name">
-					<img src="~/static/images/name.png" alt="brianlee">
-				</div>
 				<div class="about-content">
-					<p>网名：Brian·Lee</p>
+					<p>网名：Jessie</p>
 
-					<p>职业：Web前端工程师</p>
+					<p>职业：Go后端工程师</p>
 
-					<p>邮箱：cn_brian@163.com</p>
+					<p>邮箱：engineer_mrhuang@163.com</p>
 				</div>
 			</el-card>
 			<!-- 近期文章开始 -->
@@ -91,11 +88,11 @@ export default {
 	},
 	head() {
 		return {
-			title:'Brian的个人博客-一个基于Nuxt构建的博客网站',
+			title:'Jessie的个人博客',
 			meta:[
-				{hid:'description',name:'description',content:'李闯个人博客，是一个记录博主学习和成长的自媒体博客。关注于web前端技术和web全栈技术的学习研究。'},
-				{hid:'keywords',name:'keywords',content:'李闯,互联网,自媒体,李闯博客,新鲜科技,科技博客,Brian,独立博客,个人博客,原创博客,brianlee,brian,前端,前端开发,全栈,全栈开发,nuxt,nuxtjs,vue,vuejs'},
-				{hid:'author',content:'brian'}
+				{hid:'description',name:'description',content:''},
+				{hid:'keywords',name:'keywords',content:''},
+				{hid:'author',content:'jessie'}
 			]
 		}
 	}
