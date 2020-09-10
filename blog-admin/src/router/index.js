@@ -18,6 +18,11 @@ Vue.use(VueRouter)
     path: "/login",
     name: "login",
     component: () => import('../views/Login.vue')
+  },
+  {
+    path: "/test",
+    name: "test",
+    component: () => import("../components/ModalDel.vue")
   }
 ]
 

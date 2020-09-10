@@ -1,18 +1,18 @@
 <template>
   <div>
     <el-dialog
-    title="提示"
-    :visible.sync="dialogVisible"
-    width="30%"
-    :before-close="handleClose">
-    <div style="text-align:center">
-        <span style="font-weight: bold;">这个操作将会删除您的数据</span>
-        <span style="font-weight: bold;">您确定要这么做？</span>
-    </div>
-    <span slot="footer" class="dialog-footer">
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <div style="text-align:center">
+        <p style="font-weight: bold;">这个操作将会删除您的数据</p>
+        <p style="font-weight: bold;">您确定要这么做?</p>
+      </div>
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-    </span>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -21,7 +21,7 @@
   export default {
     data() {
       return {
-        dialogVisible: false
+        dialogVisible: true
       };
     },
     methods: {
