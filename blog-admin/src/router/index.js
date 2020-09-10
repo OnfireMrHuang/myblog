@@ -22,7 +22,7 @@ Vue.use(VueRouter)
   {
     path: "/test",
     name: "test",
-    component: () => import("../components/ModalDel.vue")
+    component: () => import("../views/NotFound.vue")
   }
 ]
 
