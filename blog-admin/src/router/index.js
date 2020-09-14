@@ -20,9 +20,16 @@ Vue.use(VueRouter)
     component: () => import('../views/Login.vue')
   },
   {
-    path: "/test",
-    name: "test",
-    component: () => import("../views/NavLeft.vue")
+    path: "/admin",
+    name: "admin",
+    component: () => import("../views/Admin.vue"),
+    children: [
+      {
+        path: "version",
+        name: "version",
+        component: () => import("../views/Version.vue")
+      }
+    ]
   }
 ]
 

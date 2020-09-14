@@ -4,6 +4,3 @@
   </div>
 </template>
 
-<style lang="css">
-  @import "./style/stylehome.css";
-</style>
