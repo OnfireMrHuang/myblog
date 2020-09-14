@@ -22,7 +22,7 @@ Vue.use(VueRouter)
   {
     path: "/test",
     name: "test",
-    component: () => import("../views/NavHeader.vue")
+    component: () => import("../views/NavLeft.vue")
   }
 ]
 
