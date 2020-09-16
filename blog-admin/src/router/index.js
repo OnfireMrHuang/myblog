@@ -35,6 +35,11 @@ Vue.use(VueRouter)
         component: () => import("../views/Admin-Index.vue")
       },
       {
+        path: "article",
+        name: "article",
+        component: () => import("../views/Article.vue")
+      },
+      {
         path: "version",
         name: "version",
         component: () => import("../views/Version.vue")
