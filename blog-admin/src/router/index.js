@@ -40,6 +40,11 @@ Vue.use(VueRouter)
         component: () => import("../views/Article.vue")
       },
       {
+        path: 'article/:id',
+        name: 'update',
+        component: () => import(/* webpackChunkName: 'update' */ '../views/Update.vue')
+      },
+      {
         path: 'list',
         name: 'articleList',
         component: () => import( '../views/ArticleList.vue'),
