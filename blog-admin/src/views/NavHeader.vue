@@ -1,34 +1,30 @@
 <template>
     <div>
-      <el-row type="flex" justify="center">
-      <el-col :span="16">
-        <div class="logo">
-            Jessie's Blogs
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="nav-right">
-            <el-menu
+      <el-menu
             :default-active="activeIndex"
             class="el-menu-demo"
             mode="horizontal"
             @select="handleSelect">
-                <el-menu-item index="1">
-                    <i class="el-icon-edit"></i>
-                    待定内容1
-                </el-menu-item>
-                <el-menu-item index="2">
-                    <i class="el-icon-share"></i>
-                    待定内容2
-                </el-menu-item>
-                <el-menu-item index="3">
-                    <i class="el-icon-setting"></i>
-                    待定内容3
-                </el-menu-item>
-            </el-menu>
-        </div>
-      </el-col>
-    </el-row>
+          <el-row type="flex" justify="center">
+          <el-col :span="18">
+          <div class="logo">
+             Jessie's Blogs
+          </div>
+          </el-col>
+          <el-menu-item index="1">
+              <i class="el-icon-edit"></i>
+              待定内容1
+          </el-menu-item>
+          <el-menu-item index="2">
+              <i class="el-icon-share"></i>
+              待定内容2
+          </el-menu-item>
+          <el-menu-item index="3">
+              <i class="el-icon-setting"></i>
+              待定内容3
+          </el-menu-item>
+      </el-row> 
+    </el-menu>
   </div>
 </template>
 

@@ -5,7 +5,7 @@
         <el-col :span="3">
             <nav-left class="navleft"></nav-left>
         </el-col>
-        <el-col span="21" class="routerView">
+        <el-col :span="21" class="routerView">
             <router-view></router-view>
         </el-col>
     </el-row>

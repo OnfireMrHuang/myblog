@@ -3,7 +3,7 @@
     <el-menu
       default-active="2"
       class="el-menu-vertical-demo"
-      @on-select="getIndex"
+      @select="getIndex"
       @open="handleOpen"
       @close="handleClose">
       <el-submenu index="1">
@@ -43,7 +43,8 @@
         console.log(key, keyPath);
       },
       getIndex(key, keyPath) {
-        console.log(key, keyPath);
+        this.$router.push({name:key})
+        // console.log("key:",key,"key path:", keyPath);
       }
     }
   }
