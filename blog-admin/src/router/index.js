@@ -48,6 +48,11 @@ Vue.use(VueRouter)
         path: "version",
         name: "version",
         component: () => import("../views/Version.vue")
+      },
+      { 
+        path: 'comment',
+        name: 'comment',
+        component: () => import('../views/Comment.vue'),
       }
     ]
   }

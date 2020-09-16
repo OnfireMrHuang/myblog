@@ -4,25 +4,25 @@
         <el-col span="24">
             <h2 style="margin-bottom:0.5%;font-size=10px;">前端文章:</h2>
             <el-table border stripe :data="front">
-                   <el-table-column
-                    prop="title"
-                    label="文章标题">
+                <el-table-column
+                  prop="title"
+                  label="文章标题">
                 </el-table-column>
                 <el-table-column
-                    prop="des"
-                    label="文章简介">
+                  prop="des"
+                  label="文章简介">
                 </el-table-column>
                 <el-table-column
-                    prop="_id"
-                    label="ID">
+                  prop="_id"
+                  label="ID">
                 </el-table-column>
                 <el-table-column
-                    prop="time"
-                    label="发布时间">
+                  prop="time"
+                  label="发布时间">
                 </el-table-column>
                 <el-table-column
-                    prop="action"
-                    label="操作">
+                  prop="action"
+                  label="操作">
                 </el-table-column>
               </el-table>
             <div class="pagination" v-show="frontCount !== 0">
