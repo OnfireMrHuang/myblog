@@ -40,6 +40,11 @@ Vue.use(VueRouter)
         component: () => import("../views/Article.vue")
       },
       {
+        path: 'list',
+        name: 'articleList',
+        component: () => import( '../views/ArticleList.vue'),
+      },
+      {
         path: "version",
         name: "version",
         component: () => import("../views/Version.vue")
