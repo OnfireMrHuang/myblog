@@ -6,9 +6,9 @@
         <el-input v-model="version" size="medium" placeholder="输入版本号，例如:1.0.0"></el-input>
       </el-col>
     </el-row>
-    <el-row type="flex" justify="center">
+    <el-row type="flex" justify="start">
       <el-col :span="22">
-        <!-- <mavon-editor @change="changeContent" class="version_content" v-model="content" fontSize="18px" placeholder="# 发布版本内容" style="min-height:600px;" /> -->
+        <mavon-editor @change="changeContent" class="version_content" v-model="content" fontSize="18px" placeholder="# 发布版本内容" style="min-height:600px;" />
         <el-button type="success" class="version_button" @click="sublimtContent">发布新版本</el-button>
       </el-col>
     </el-row>

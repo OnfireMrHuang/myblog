@@ -30,6 +30,11 @@ Vue.use(VueRouter)
     component: () => import("../views/Admin.vue"),
     children: [
       {
+        path: "/admin/",
+        name: "admin",
+        component: () => import("../views/Admin-Index.vue")
+      },
+      {
         path: "version",
         name: "version",
         component: () => import("../views/Version.vue")
