@@ -60,22 +60,21 @@
             </div>
         </el-col>
     </el-row>           
-        <!-- 封装模态框 -->
-        <!-- <Modal v-model="modal2" width="360">
-            <p slot="header" style="color:#f60;text-align:center">
-                <Icon type="information-circled"></Icon>
-                <span>删除文章提醒</span>
-            </p>
-            <div style="text-align:center">
-                <p style="font-weight:bold;font-size:16px;">此删除操作将会永久删除，且无法恢复</p>
-                <p style="font-weight:bold;">你确定要删除么？</p>
-            </div>
-            <div slot="footer">
-                <Button type="error" size="large" long :loading="modal_loading" @click="dele">确定删除</Button>
-            </div>
-        </Modal> -->
-        <!-- 模态框结束 -->
-    <!-- </el-row> -->
+    <!-- 封装模态框 -->
+    <el-dialog 
+    :visible.sync="dialogVisible" 
+    width="360"
+    title="删除文章提醒"
+    center>
+        <div style="text-align:center">
+            <p style="font-weight:bold;font-size:16px;">此删除操作将会永久删除，且无法恢复</p>
+            <p style="font-weight:bold;">你确定要删除么？</p>
+        </div>
+        <div slot="footer">
+            <el-button type="danger" size="medium" :loading="dialog_loading" @click="dele">确定删除</el-button>
+        </div>
+    </el-dialog>
+    <!-- 模态框结束 -->
     </div>
 </template>
 <script>
@@ -88,8 +87,8 @@ export default {
       backCount: 2,
       del: null,
       ok: null,
-      modal2: false,
-      modal_loading: false,
+      dialogVisible: false,
+      dialog_loading: false,
       id: '',
       list: '',
     }
