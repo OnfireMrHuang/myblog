@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import store from '../store'
 
 const originalPush = VueRouter.prototype.push
@@ -14,7 +13,7 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    redirect: '/admin',
     meta: {
       requireAuth: true // 添加改字段，表示进入这个路由是需要登陆的
     }

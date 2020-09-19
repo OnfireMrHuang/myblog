@@ -1,23 +1,26 @@
 <template>
+  <div class="login_images">
     <el-row type="flex" justify="center">
-        <!-- <el-card v-if="isLogin">
-            欢迎: admins
-            <br>
-            <br>
-            <el-button type="primary" icon="el-icon-upload" @click="loginOut">退出登录</el-button>
-        </el-card> -->
-        <el-form ref="loginForm" :model="user" :rules="rules" status-icon label-width="50px">
-            <el-form-item label="账号" prop="name">
-                <el-input v-model="user.name"></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="pass">
-                <el-input v-model="user.pass" type="password"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" icon="el-icon-upload" @click="login">登陆</el-button>
-            </el-form-item>
-        </el-form>
+      <el-col :span="8" style="margin-top:10%;">
+        <el-card class="box-card" shadow="always">
+            <div slot="header" class="clearfix">
+                <span>欢迎登陆!</span>
+            </div>
+            <el-form ref="loginForm" :model="user" :rules="rules" status-icon label-width="100px">
+                <el-form-item label="账号" prop="name">
+                    <el-input v-model="user.name"></el-input>
+                </el-form-item>
+                <el-form-item label="密码" prop="pass">
+                    <el-input v-model="user.pass" type="password"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" style="margin-left:25%" @click="login">登陆</el-button>
+                </el-form-item>
+            </el-form>
+        </el-card>
+      </el-col>
     </el-row>
+  </div>
 </template>
 
 <script>
@@ -25,7 +28,6 @@
 export default {
     data() {
         return {
-            isLogin:false,
             user: {},
             rules: {
                 name: [{ required: true,message: "用户名不能为空", trigger: "blur"}],
@@ -78,3 +80,13 @@ export default {
     }
 }
 </script>
+
+<style lang="less">
+  .login_images {
+    width:100%;
+    height:100vh;
+    background:url('../../static/images/login.jpg') no-repeat;
+    background-size:cover;
+    background-position: center center;
+  }
+</style>
