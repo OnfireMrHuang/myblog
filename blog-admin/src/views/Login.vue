@@ -75,12 +75,6 @@ export default {
                     return false; // 前端验证失败则跳过
                 }
             });
-        },
-        logout() {
-            // 登陆退出
-            this.isLogin = false;
-            this.$store.commit("saveToken",""); // 清理storex的token
-            window.localStorage.setItem("token","") // 清理本地缓存的token
         }
     }
 }

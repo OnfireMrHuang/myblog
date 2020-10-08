@@ -27,36 +27,45 @@ Vue.use(VueRouter)
     path: "/admin",
     name: "admin",
     component: () => import("../views/Admin.vue"),
+    meta: {
+      requireAuth:true,
+    },
     children: [
       {
         path: "/admin/",
         name: "admin",
-        component: () => import("../views/Admin-Index.vue")
+        component: () => import("../views/Admin-Index.vue"),
+        meta: {requireAuth:true},
       },
       {
         path: "article",
         name: "article",
-        component: () => import("../views/Article.vue")
+        component: () => import("../views/Article.vue"),
+        meta: {requireAuth:true},
       },
       {
         path: 'article/:id',
         name: 'update',
-        component: () => import(/* webpackChunkName: 'update' */ '../views/Update.vue')
+        component: () => import(/* webpackChunkName: 'update' */ '../views/Update.vue'),
+        meta: {requireAuth:true},
       },
       {
         path: 'list',
         name: 'articleList',
         component: () => import( '../views/ArticleList.vue'),
+        meta: {requireAuth:true},
       },
       {
         path: "version",
         name: "version",
-        component: () => import("../views/Version.vue")
+        component: () => import("../views/Version.vue"),
+        meta: {requireAuth:true},
       },
       { 
         path: 'comment',
         name: 'comment',
         component: () => import('../views/Comment.vue'),
+        meta: {requireAuth:true},
       }
     ]
   }
@@ -75,7 +84,7 @@ router.beforeEach((to,from,next) => {
   }
   // 页面的拦截验证
   if (to.meta.requireAuth) {
-    if (window.localStorage.Token && window.localStorage.Token.length>=128) {
+    if (window.localStorage.Token && window.localStorage.Token.length>=20) {
       next();
     } else {
       next({
