@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 	"server/pkg/setting"
+	"server/routers/api"
 	v1 "server/routers/api/v1"
 )
 
@@ -11,6 +12,8 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 	gin.SetMode(setting.RunMode)
+	// 获取token
+	r.GET("/auth", api.GetAuth)
 	apiV1 := r.Group("/api/v1")
 	{
 		// 获取标签列表
