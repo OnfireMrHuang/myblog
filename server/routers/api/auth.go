@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"server/models"
 	"server/pkg/e"
+	"server/pkg/logging"
 	"server/pkg/util"
 )
 
@@ -41,7 +42,7 @@ func GetAuth(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{
