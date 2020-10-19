@@ -7,6 +7,7 @@ import (
 	"net/http"
 	_ "server/docs"
 	"server/middleware/jwt"
+	"server/pkg/qrcode"
 	"server/pkg/setting"
 	"server/pkg/upload"
 	"server/routers/api"
@@ -31,6 +32,10 @@ func InitRouter() *gin.Engine {
 		apiV1.PUT("/tags/:id", v1.EditTag)
 		// 删除标签
 		apiV1.DELETE("/tags/:id", v1.DeleteTag)
+		// 导出标签
+		apiV1.POST("/tags/export", v1.ExportTag)
+		// 导入标签
+		apiV1.POST("/tags/import", v1.ImportTag)
 
 		// 获取文章列表
 		apiV1.GET("/articles", v1.GetArticles)
@@ -42,9 +47,11 @@ func InitRouter() *gin.Engine {
 		apiV1.PUT("/articles/:id", v1.EditArticle)
 		// 删除文章
 		apiV1.DELETE("/articles/:id", v1.DeleteArticle)
+		apiV1.POST("/articles/poster/generateArticlePoster", v1.GenerateArticlePoster)
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.POST("/upload", api.UploadImage)
 	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
+	r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 	return r
 }
