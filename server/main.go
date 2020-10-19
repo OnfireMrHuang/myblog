@@ -7,18 +7,21 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"server/pkg/logging"
 	"server/pkg/setting"
 	"server/routers"
 	"time"
 )
 
 func main() {
+	setting.Setup()
+	logging.Setup()
 	router := routers.InitRouter()
 	s := &http.Server{
-		Addr:           fmt.Sprintf("127.0.0.1:%d", setting.HTTPPort),
+		Addr:           fmt.Sprintf("127.0.0.1:%d", setting.ServerSetting.HttpPort),
 		Handler:        router,
-		ReadTimeout:    setting.ReadTimeout,
-		WriteTimeout:   setting.WriteTimeout,
+		ReadTimeout:    setting.ServerSetting.ReadTimeout,
+		WriteTimeout:   setting.ServerSetting.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
 	go func() {

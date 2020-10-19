@@ -4,9 +4,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/swaggo/files"
 	"github.com/swaggo/gin-swagger"
+	"net/http"
 	_ "server/docs"
 	"server/middleware/jwt"
 	"server/pkg/setting"
+	"server/pkg/upload"
 	"server/routers/api"
 	v1 "server/routers/api/v1"
 )
@@ -15,7 +17,7 @@ func InitRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
-	gin.SetMode(setting.RunMode)
+	gin.SetMode(setting.ServerSetting.RunMode)
 	// 获取token
 	r.GET("/auth", api.GetAuth)
 	apiV1 := r.Group("/api/v1")
@@ -42,5 +44,7 @@ func InitRouter() *gin.Engine {
 		apiV1.DELETE("/articles/:id", v1.DeleteArticle)
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.POST("/upload", api.UploadImage)
+	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
 	return r
 }
