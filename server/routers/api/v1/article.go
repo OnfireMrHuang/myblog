@@ -7,9 +7,11 @@ import (
 	"github.com/unknwon/com"
 	"net/http"
 	"server/models"
+	"server/pkg/app"
 	"server/pkg/e"
 	"server/pkg/setting"
 	"server/pkg/util"
+	"server/service/article_service"
 )
 
 // @Summary Get a single article
@@ -19,28 +21,35 @@ import (
 // @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/articles/{id} [get]
 func GetArticle(c *gin.Context) {
+	appG := app.Gin{c}
 	id := com.StrTo(c.Param("id")).MustInt()
 	valid := validation.Validation{}
 	valid.Min(id, 1, "id").Message("ID必须大于0")
-	code := e.INVALID_PARAMS
-	var data interface{}
+
 	if !valid.HasErrors() {
-		if models.ExistArticleByID(id) {
-			data = models.GetArticle(id)
-			code = e.SUCCESS
-		} else {
-			code = e.ERROR_NOT_EXIST_ARTICLE
-		}
-	} else {
-		for _, err := range valid.Errors {
-			log.Info(err.Key, err.Message)
-		}
+		app.MarkErrors(valid.Errors)
+		appG.Response(http.StatusOK, e.INVALID_PARAMS, nil)
+		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"msg":  e.GetMsg(code),
-		"data": data,
-	})
+
+	articleService := article_service.Article{ID: id}
+	exists, err := articleService.ExistByID()
+	if err != nil {
+		appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_ARTICLE, nil)
+		return
+	}
+
+	if !exists {
+		appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_ARTICLE, nil)
+		return
+	}
+
+	article, err := articleService.Get()
+	if err != nil {
+		appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_ARTICLE, nil)
+		return
+	}
+	appG.Response(http.StatusOK, e.SUCCESS, article)
 }
 
 // @Summary Get multiple articles
