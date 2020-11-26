@@ -1,9 +1,6 @@
 package routers
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/swaggo/files"
-	"github.com/swaggo/gin-swagger"
 	"net/http"
 	_ "server/docs"
 	"server/middleware/jwt"
@@ -12,6 +9,10 @@ import (
 	"server/pkg/upload"
 	"server/routers/api"
 	v1 "server/routers/api/v1"
+
+	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func InitRouter() *gin.Engine {
@@ -47,6 +48,14 @@ func InitRouter() *gin.Engine {
 		apiV1.PUT("/articles/:id", v1.EditArticle)
 		// 删除文章
 		apiV1.DELETE("/articles/:id", v1.DeleteArticle)
+
+		// 获取某一篇文章的评论列表
+		apiV1.POST("/comments", v1.Comments)
+		// 发布评论
+		apiV1.POST("/comment", v1.AddComment)
+		// 删除评论
+		apiV1.DELETE("/comment/:id", v1.DelComment)
+
 		apiV1.POST("/articles/poster/generateArticlePoster", v1.GenerateArticlePoster)
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
