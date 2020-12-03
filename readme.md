@@ -1,14 +1,13 @@
 # 我的个人博客系统
 
-## 接口定义
+## 文章article模块
 
-### 获取文章信息
-**method:**  GET
+### 获取指定文章内容
 
-**url:**   /api/v1/articles?id=文章ID 
+[GET]  /api/v1/articles/{id}
 
->
-reponse
+
+响应:
 ```json
 {
     "code": 0,
@@ -19,21 +18,23 @@ reponse
         "des": "简要描述",
         "content":"文章内容",
         "time": "文章创建时间",
-        "commment": [],
+        "tags": [], // 文章关联的标签
+        "commment": [], // 文章关联的评论
     }
 }
 ```
 ### 获取文章列表
 
-[GET] /api/v1/articles
-
+[GET] /api/v1/articles?page={page}&limit={limit}
+ 
+ 响应:
 ```json
 {
-    "error": 0,
+    "code": 0,
+    "msg" : "success",
     "count": 6,
     "list": [
         {
-            "comment": [], // 评论列表
             "id": "文章ID",
             "title": "文章标题",
             "time": "时间",
@@ -43,13 +44,74 @@ reponse
 }
 ```
 
-### 发布评论
+### 发表文章
 
-POST /api/comment
+[POST] /api/v1/article
 
-req:
+请求
 ```json
 {
+    "title": "文章标题",
+    "des": "文章简要描述",
+    "content": "文章的内容",
+    "tags": [] // 设置关联的标签
+}
+```
+
+响应:
+```json
+{
+    "code" : 0,
+    "msg": "success",
+    "data": {
+        "id": 1,
+    }
+}
+```
+
+### 编辑文章
+[PUT] /api/v1/article/{id}
+请求:
+```json
+{
+    "title": "文章标题修改 (optional)",
+    "des": "文章简要描述 (optional)",
+    "content": "修改后文章内容 (optional)",
+    "tags": [] // 设置关联的tag
+}
+
+响应:
+```json
+{
+    "code" : 0,
+    "msg" : "success",
+    "data" : {}
+}
+```
+
+### 删除文章
+[DELETE] /api/v1/article/{id}
+
+响应:
+```json
+{
+    "code" : 0,
+    "msg" : "success",
+    "data" : {}
+}
+```
+
+
+## 评论模块
+
+### 发布评论
+
+[POST] /api/v1/comment
+
+请求:
+```json
+{
+    "article_id": "文章ID",
     "username":"用户名",
     "email": "邮箱",
     "content": "评论内容",
@@ -58,47 +120,105 @@ req:
 }
 ```
 
-rsp:
+响应:
 ```json
 {
-  "status": "0000",
-  "success": 1,
-  "result": {
-    "n": 1,
-    "nModified": 1,
-    "ok": 1
+  "code": 0,
+  "msg": "success",
+  "data": {
+    "id": 1, // 评论ID号
+    "article_id": 2 // 关联的文章ID
   }
 }
 ```
 
-#### 获取文章评论
+### 删除评论
 
-POST /api/articleComments
+[DELETE] /api/v1/comment/{id}
 
-req:
+响应:
 ```json
 {
-    "id": "文章ID",
+    "code": 0,
+    "msg" : "success",
+    "data": {},
 }
 ```
 
-rsp:
+## 标签模块
+
+### 获取所有标签
+
+[GET] /api/v1/tags
+
+响应:
 ```json
 {
-    "error": 0,
-    "count": 13,
-    "result": {
-        "id": "文章ID号",
-        "title": "文章标题",
-        "comment" : [
-            {
-                "username": "xixi",
-                "email": "2292553208@qq.com",
-                "content": "测试一下",
-                "time": 1604745002246,
-                "ip": "::ffff:172.25.0.1"
-            }
-        ]
-    }
+    "code": 0,
+    "message": "success",
+    "count" : 6,
+    "list" : [
+        {
+            "id" : 0, // 标签的ID号
+            "name" : "标签名称",
+            "state" : 0 // 标签状态   
+        }
+    ]
+}
+```
+
+
+### 添加标签
+
+[POST] /api/v1/tags
+
+请求:
+```json
+{
+    "name" : "标签名字",
+    "state" : 0 // 标签状态
+}
+```
+
+响应:
+```json
+{
+    "code": 0,
+    "msg": "success",
+    "data": {}   
+}
+```
+
+### 修改标签
+
+[PUT] /api/v1/tags/{id}
+
+请求:
+```json
+{
+    "name": "修改后的标签名称",
+    "state": 1   
+}
+```
+
+响应:
+```json
+{
+    "code": 0,
+    "msg": "success",
+    "data": {}
+}
+```
+
+### 删除标签
+
+[DELETE] /api/v1/tags/{id}
+
+响应:
+```json
+{
+    "code": 0,
+    "msg": "success",
+    "data": {}
 }
 ```
