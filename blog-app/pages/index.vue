@@ -9,7 +9,6 @@
 					<h2 class="box-title">{{item.title}}</h2>
 					<div class="box-icon">
 						<span><i class="el-icon-date"></i>&nbsp;{{item.time}}</span>
-						<!-- <span><i class="el-icon-view"></i>&nbsp;115次阅读</span> -->
 					</div>
 					<div class="box-content">{{item.des}}</div>
 				</el-card>
@@ -61,24 +60,27 @@ import {baseurl} from '~/plugins/url.js'
 export default {
 	data() {
 		return {
-			active:'index'
+			active:'index',
+			list: [],
+			count: 5,
+			lately: 1,
 		}
 	},
 	async asyncData({app}) {
 		// 服务器端渲染数据
-		let json = {page:1,pagesize:5}
-		let {data} =await app.$axios.get(`${baseurl}/api/article/getFrontArticle`,{params:json});
+		let json = {page:1,limit:5}
+		let {data} =await app.$axios.get(`${baseurl}/api/v1/articles`,{params:json});
 		let {list,count} = data;
-		let lately = list.slice(0,4);
-		return {list,count,lately}
+		// let lately = list.slice(0,4);
+		// return {list,count,lately}}
 	},
 	methods: {
 		pagination(page) {
-			let json = {page,pagesize:5}
-			this.$axios.get(`${baseurl}/api/article/getFrontArticle`,{params:json}).then(res=>{
-				let {error,count,list} = res.data;
-				this.list =list;
-			});
+			// let json = {page,pagesize:5}
+			// this.$axios.get(`${baseurl}/api/article/getFrontArticle`,{params:json}).then(res=>{
+			// 	let {error,count,list} = res.data;
+			// 	this.list =list;
+			// });
 		}
 	},
 	components: {

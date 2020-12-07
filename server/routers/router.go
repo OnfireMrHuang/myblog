@@ -33,21 +33,17 @@ func InitRouter() *gin.Engine {
 		apiV1.PUT("/tags/:id", v1.EditTag)
 		// 删除标签
 		apiV1.DELETE("/tags/:id", v1.DeleteTag)
-		// 导出标签
-		apiV1.POST("/tags/export", v1.ExportTag)
-		// 导入标签
-		apiV1.POST("/tags/import", v1.ImportTag)
 
 		// 获取文章列表
 		apiV1.GET("/articles", v1.GetArticles)
 		// 获取指定文章
 		apiV1.GET("/articles/:id", v1.GetArticle)
-		// 添加文章
-		apiV1.POST("/articles", v1.AddArticle)
+		// 发布文章
+		apiV1.POST("/article", v1.AddArticle)
 		// 编辑文章
-		apiV1.PUT("/articles/:id", v1.EditArticle)
+		apiV1.PUT("/article/:id", v1.EditArticle)
 		// 删除文章
-		apiV1.DELETE("/articles/:id", v1.DeleteArticle)
+		apiV1.DELETE("/article/:id", v1.DeleteArticle)
 
 		// 获取某一篇文章的评论列表
 		apiV1.POST("/comments", v1.Comments)

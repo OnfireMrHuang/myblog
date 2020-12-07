@@ -24,7 +24,6 @@
 
 <script>
 import NavHeader from '~/components/NavHeader.vue'
-// import {baseurl} from '~/plugins/url.js'
 export default {
     data() {
         return {
@@ -32,8 +31,6 @@ export default {
         }
     },
     async asyncData({app}) {
-        // let result = await app.$axios.get(`${baseurl}/api/version/getVersion`);
-		// let {error,list} = result.data;
 		let list = [
 			{
 				version:"1.0.0",
