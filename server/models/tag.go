@@ -54,13 +54,13 @@ func ExistTagByID(id int) bool {
 	}
 	return false
 }
-func DeleteTag(id int) bool {
+func DeleteTag(id int) error {
 	db.Where("id = ?", id).Delete(&Tag{})
-	return true
+	return nil
 }
-func EditTag(id int, data interface{}) bool {
+func EditTag(id int, data interface{}) error {
 	db.Model(&Tag{}).Where("id = ?", id).Updates(data)
-	return true
+	return nil
 }
 
 func CleanAllTag() bool {

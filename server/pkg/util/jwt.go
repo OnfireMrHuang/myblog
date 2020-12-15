@@ -2,11 +2,10 @@ package util
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"server/pkg/setting"
 	"time"
 )
 
-var jwtSecret = []byte(setting.JwtSecret)
+var jwtSecret []byte
 
 type Claims struct {
 	Username string `json:"username"`

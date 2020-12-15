@@ -50,7 +50,7 @@ func EditArticle(id int, data interface{}) bool {
 	return true
 }
 
-func AddArticle(data map[string]interface{}) bool {
+func AddArticle(data map[string]interface{}) error {
 	db.Create(&Article{
 		TagID:     data["tag_id"].(int),
 		Title:     data["title"].(string),
@@ -59,7 +59,7 @@ func AddArticle(data map[string]interface{}) bool {
 		CreatedBy: data["created_by"].(string),
 		State:     data["state"].(int),
 	})
-	return true
+	return nil
 }
 
 func DeleteArticle(id int) bool {

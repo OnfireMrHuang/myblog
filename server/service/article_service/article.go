@@ -43,7 +43,7 @@ func (a *Article) Add() error {
 }
 
 func (a *Article) Edit() error {
-	return models.EditArticle(a.ID, map[string]interface{}{
+	models.EditArticle(a.ID, map[string]interface{}{
 		"tag_id":          a.TagID,
 		"title":           a.Title,
 		"desc":            a.Desc,
@@ -52,6 +52,7 @@ func (a *Article) Edit() error {
 		"state":           a.State,
 		"modified_by":     a.ModifiedBy,
 	})
+	return nil
 }
 
 func (a *Article) Get() (*models.Article, error) {
@@ -101,11 +102,7 @@ func (a *Article) GetAll() ([]*models.Article, error) {
 		}
 	}
 
-	articles, err := models.GetArticles(a.PageNum, a.PageSize, a.getMaps())
-	if err != nil {
-		return nil, err
-	}
-
+	articles := models.GetArticles(a.PageNum, a.PageSize, a.getMaps())
 	gredis.Set(key, articles, 3600)
 	return articles, nil
 }

@@ -2,6 +2,7 @@ package tag_service
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 	"strconv"
 	"time"
@@ -29,15 +30,19 @@ type Tag struct {
 }
 
 func (t *Tag) ExistByName() (bool, error) {
-	return models.ExistTagByName(t.Name)
+	return models.ExistTagByName(t.Name), nil
 }
 
 func (t *Tag) ExistByID() (bool, error) {
-	return models.ExistTagByID(t.ID)
+	return models.ExistTagByID(t.ID), nil
 }
 
 func (t *Tag) Add() error {
-	return models.AddTag(t.Name, t.State, t.CreatedBy)
+	ok := models.AddTag(t.Name, t.State, t.CreatedBy)
+	if !ok {
+		return errors.New("add tag fail")
+	}
+	return nil
 }
 
 func (t *Tag) Edit() error {
@@ -56,7 +61,7 @@ func (t *Tag) Delete() error {
 }
 
 func (t *Tag) Count() (int, error) {
-	return models.GetTagTotal(t.getMaps())
+	return models.GetTagTotal(t.getMaps()),nil
 }
 
 func (t *Tag) GetAll() ([]models.Tag, error) {
@@ -81,11 +86,7 @@ func (t *Tag) GetAll() ([]models.Tag, error) {
 		}
 	}
 
-	tags, err := models.GetTags(t.PageNum, t.PageSize, t.getMaps())
-	if err != nil {
-		return nil, err
-	}
-
+	tags= models.GetTags(t.PageNum, t.PageSize, t.getMaps())
 	gredis.Set(key, tags, 3600)
 	return tags, nil
 }
@@ -129,7 +130,7 @@ func (t *Tag) Export() (string, error) {
 	}
 
 	time := strconv.Itoa(int(time.Now().Unix()))
-	filename := "tags-" + time + export.EXT
+	filename := "tags-" + time + ".xls"
 
 	dirFullPath := export.GetExcelFullPath()
 	err = file.IsNotExistMkDir(dirFullPath)
