@@ -1,18 +1,13 @@
 package routers
 
 import (
-	"net/http"
 	_ "server/docs"
 	"server/middleware/jwt"
-	"server/pkg/qrcode"
 	"server/pkg/setting"
-	"server/pkg/upload"
 	"server/routers/api"
 	v1 "server/routers/api/v1"
 
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func InitRouter() *gin.Engine {
@@ -52,11 +47,11 @@ func InitRouter() *gin.Engine {
 		// 删除评论
 		apiV1.DELETE("/comment/:id", v1.DelComment)
 
-		apiV1.POST("/articles/poster/generateArticlePoster", v1.GenerateArticlePoster)
+		//apiV1.POST("/articles/poster/generateArticlePoster", v1.GenerateArticlePoster)
 	}
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	r.POST("/upload", api.UploadImage)
-	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
-	r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
+	//r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	//r.POST("/upload", api.UploadImage)
+	//r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
+	//r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 	return r
 }

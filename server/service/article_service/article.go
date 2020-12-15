@@ -80,43 +80,46 @@ func (a *Article) Get() (*models.Article, error) {
 }
 
 func (a *Article) GetAll() ([]*models.Article, error) {
-	var (
-		articles, cacheArticles []*models.Article
-	)
-
-	cache := cache_service.Article{
-		TagID: a.TagID,
-		State: a.State,
-
-		PageNum:  a.PageNum,
-		PageSize: a.PageSize,
-	}
-	key := cache.GetArticlesKey()
-	if gredis.Exists(key) {
-		data, err := gredis.Get(key)
-		if err != nil {
-			logging.Info(err)
-		} else {
-			json.Unmarshal(data, &cacheArticles)
-			return cacheArticles, nil
-		}
-	}
-
-	articles := models.GetArticles(a.PageNum, a.PageSize, a.getMaps())
-	gredis.Set(key, articles, 3600)
-	return articles, nil
+	//var (
+	//	articles, cacheArticles []*models.Article
+	//)
+	//
+	//cache := cache_service.Article{
+	//	TagID: a.TagID,
+	//	State: a.State,
+	//
+	//	PageNum:  a.PageNum,
+	//	PageSize: a.PageSize,
+	//}
+	//key := cache.GetArticlesKey()
+	//if gredis.Exists(key) {
+	//	data, err := gredis.Get(key)
+	//	if err != nil {
+	//		logging.Info(err)
+	//	} else {
+	//		json.Unmarshal(data, &cacheArticles)
+	//		return cacheArticles, nil
+	//	}
+	//}
+	return nil, nil
+	//articles := models.GetArticles(a.PageNum, a.PageSize, a.getMaps())
+	//gredis.Set(key, articles, 3600)
+	//return articles, nil
 }
 
 func (a *Article) Delete() error {
-	return models.DeleteArticle(a.ID)
+	return nil
+	//return models.DeleteArticle(a.ID)
 }
 
 func (a *Article) ExistByID() (bool, error) {
-	return models.ExistArticleByID(a.ID)
+	return false, nil
+	//return models.ExistArticleByID(a.ID)
 }
 
 func (a *Article) Count() (int, error) {
-	return models.GetArticleTotal(a.getMaps())
+	return 0, nil
+	//return models.GetArticleTotal(a.getMaps())
 }
 
 func (a *Article) getMaps() map[string]interface{} {

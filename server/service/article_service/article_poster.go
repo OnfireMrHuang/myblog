@@ -9,7 +9,6 @@ import (
 
 	"github.com/golang/freetype"
 
-	"server/pkg/file"
 	"server/pkg/qrcode"
 	"server/pkg/setting"
 )
@@ -33,20 +32,21 @@ func GetPosterFlag() string {
 }
 
 func (a *ArticlePoster) CheckMergedImage(path string) bool {
-	if file.CheckNotExist(path+a.PosterName) == true {
-		return false
-	}
+	//if file.CheckNotExist(path+a.PosterName) == true {
+	//	return false
+	//}
 
 	return true
 }
 
 func (a *ArticlePoster) OpenMergedImage(path string) (*os.File, error) {
-	f, err := file.MustOpen(a.PosterName, path)
-	if err != nil {
-		return nil, err
-	}
+	//f, err := file.MustOpen(a.PosterName, path)
+	//if err != nil {
+	//	return nil, err
+	//}
 
-	return f, nil
+	//return f, nil
+	return nil, nil
 }
 
 type ArticlePosterBg struct {
@@ -94,7 +94,7 @@ type DrawText struct {
 }
 
 func (a *ArticlePosterBg) DrawPoster(d *DrawText, fontName string) error {
-	fontSource := setting.AppSetting.RuntimeRootPath + setting.AppSetting.FontSavePath + fontName
+	fontSource := setting.AppSetting.RuntimeRootPath // + setting.AppSetting.FontSavePath + fontName
 	fontSourceBytes, err := ioutil.ReadFile(fontSource)
 	if err != nil {
 		return err
@@ -147,46 +147,46 @@ func (a *ArticlePosterBg) Generate() (string, string, error) {
 		}
 		defer mergedF.Close()
 
-		bgF, err := file.MustOpen(a.Name, path)
-		if err != nil {
-			return "", "", err
-		}
-		defer bgF.Close()
+		//bgF, err := file.MustOpen(a.Name, path)
+		//if err != nil {
+		//	return "", "", err
+		//}
+		//defer bgF.Close()
+		//
+		//qrF, err := file.MustOpen(fileName, path)
+		//if err != nil {
+		//	return "", "", err
+		//}
+		//defer qrF.Close()
 
-		qrF, err := file.MustOpen(fileName, path)
-		if err != nil {
-			return "", "", err
-		}
-		defer qrF.Close()
+		//bgImage, err := jpeg.Decode(bgF)
+		//if err != nil {
+		//	return "", "", err
+		//}
+		//qrImage, err := jpeg.Decode(qrF)
+		//if err != nil {
+		//	return "", "", err
+		//}
 
-		bgImage, err := jpeg.Decode(bgF)
-		if err != nil {
-			return "", "", err
-		}
-		qrImage, err := jpeg.Decode(qrF)
-		if err != nil {
-			return "", "", err
-		}
-
-		jpg := image.NewRGBA(image.Rect(a.Rect.X0, a.Rect.Y0, a.Rect.X1, a.Rect.Y1))
-
-		draw.Draw(jpg, jpg.Bounds(), bgImage, bgImage.Bounds().Min, draw.Over)
-		draw.Draw(jpg, jpg.Bounds(), qrImage, qrImage.Bounds().Min.Sub(image.Pt(a.Pt.X, a.Pt.Y)), draw.Over)
-
-		err = a.DrawPoster(&DrawText{
-			JPG:    jpg,
-			Merged: mergedF,
-
-			Title: "Golang Gin 系列文章",
-			X0:    80,
-			Y0:    160,
-			Size0: 42,
-
-			SubTitle: "---煎鱼",
-			X1:       320,
-			Y1:       220,
-			Size1:    36,
-		}, "msyhbd.ttc")
+		//jpg := image.NewRGBA(image.Rect(a.Rect.X0, a.Rect.Y0, a.Rect.X1, a.Rect.Y1))
+		//
+		//draw.Draw(jpg, jpg.Bounds(), bgImage, bgImage.Bounds().Min, draw.Over)
+		//draw.Draw(jpg, jpg.Bounds(), qrImage, qrImage.Bounds().Min.Sub(image.Pt(a.Pt.X, a.Pt.Y)), draw.Over)
+		//
+		//err = a.DrawPoster(&DrawText{
+		//	JPG:    jpg,
+		//	Merged: mergedF,
+		//
+		//	Title: "Golang Gin 系列文章",
+		//	X0:    80,
+		//	Y0:    160,
+		//	Size0: 42,
+		//
+		//	SubTitle: "---煎鱼",
+		//	X1:       320,
+		//	Y1:       220,
+		//	Size1:    36,
+		//}, "msyhbd.ttc")
 
 		if err != nil {
 			return "", "", err
