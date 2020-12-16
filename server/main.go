@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"server/models"
 	"server/pkg/logging"
 	"server/pkg/setting"
 	"server/routers"
@@ -16,6 +17,7 @@ import (
 func main() {
 	setting.Setup()
 	logging.Setup()
+	models.Setup()
 	router := routers.InitRouter()
 	s := &http.Server{
 		Addr:           fmt.Sprintf("127.0.0.1:%d", setting.ServerSetting.HttpPort),

@@ -12,8 +12,8 @@ import (
 	"server/pkg/e"
 	"server/pkg/qrcode"
 	"server/pkg/setting"
-	"server/service/article_service"
 	"server/pkg/util"
+	"server/service/article_service"
 )
 
 // @Summary Get a single article
@@ -66,13 +66,13 @@ func GetArticles(c *gin.Context) {
 	maps := make(map[string]interface{}) // 暂时不做任何筛选
 	code := e.SUCCESS
 	articles := models.GetArticles(util.GetPage(c), setting.AppSetting.PageSize, maps)
-	//total := models.GetArticleTotal(maps)
+	total := models.GetArticleTotal(maps)
 
 	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"msg":  e.GetMsg(code),
-		"list": articles,
-		"total": 9,
+		"code":  code,
+		"msg":   e.GetMsg(code),
+		"list":  articles,
+		"total": total,
 	})
 }
 

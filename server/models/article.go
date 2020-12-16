@@ -32,9 +32,8 @@ func GetArticleTotal(maps interface{}) (count int) {
 }
 
 func GetArticles(pageNum int, pageSize int, maps interface{}) []Article {
-	//db.Debug().Preload("Tag").Offset(pageNum).Limit(pageSize).Find(&articles)
-	articles := []Article{{}}
-	db.Debug().Find(&articles)
+	var articles []Article
+	db.Table("blog_article").Debug().Preload("Tag").Where(maps).Offset(pageNum).Limit(pageSize).Find(&articles)
 	return articles
 }
 
