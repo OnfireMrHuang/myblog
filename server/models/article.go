@@ -31,9 +31,11 @@ func GetArticleTotal(maps interface{}) (count int) {
 	return
 }
 
-func GetArticles(pageNum int, pageSize int, maps interface{}) (articles []Article) {
-	db.Preload("Tag").Where(maps).Offset(pageNum).Limit(pageSize).Find(&articles)
-	return
+func GetArticles(pageNum int, pageSize int, maps interface{}) []Article {
+	//db.Debug().Preload("Tag").Offset(pageNum).Limit(pageSize).Find(&articles)
+	articles := []Article{{}}
+	db.Debug().Find(&articles)
+	return articles
 }
 
 func GetArticle(id int) (*Article, error) {

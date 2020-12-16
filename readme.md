@@ -32,7 +32,7 @@
 {
     "code": 0,
     "msg" : "success",
-    "count": 6,
+    "total": 6,
     "list": [
         {
             "id": "文章ID",
