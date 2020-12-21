@@ -67,20 +67,20 @@ export default {
 		}
 	},
 	async asyncData({app}) {
-		let json = {page:1,pagesize:5}
-		let {data} =await app.$axios.get(`${baseurl}/api/article/getBackArticle`,{params:json});
-		let {list,count} = data;
-		let lately = list.slice(0,4);
-		return {list,count,lately}
+		// let json = {page:1,pagesize:5}
+		// let {data} =await app.$axios.get(`${baseurl}/api/article/getBackArticle`,{params:json});
+		// let {list,count} = data;
+		// let lately = list.slice(0,4);
+		// return {list,count,lately}
 	},
 	methods: {
-		pagination(page) {
-			let json = {page,pagesize:5}
-			this.$axios.get(`${baseurl}/api/article/getBackArticle`,{params:json}).then(res=>{
-				let {error,count,list} = res.data;
-				this.list =list;
-			});
-		}
+		// pagination(page) {
+		// 	let json = {page,pagesize:5}
+		// 	this.$axios.get(`${baseurl}/api/article/getBackArticle`,{params:json}).then(res=>{
+		// 		let {error,count,list} = res.data;
+		// 		this.list =list;
+		// 	});
+		// }
 	},
 	components: {
 		NavHeader,

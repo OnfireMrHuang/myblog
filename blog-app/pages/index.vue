@@ -70,7 +70,18 @@ export default {
 		// 服务器端渲染数据
 		let json = {page:1,limit:5}
 		let {data} =await app.$axios.get(`${baseurl}/api/v1/articles`,{params:json});
-		let {list,count} = data;
+		let {code,msg,total,list} = data;
+		if(code == 200) {
+			this.$notify({
+				title: '成功',
+				message: '这是一条成功的提示消息',
+				type: 'success'
+			})
+			// app.$notify.info({
+			// 	title: '消息',
+			// 	message: '这是一条消息的提示消息'
+			// });
+		}
 		// let lately = list.slice(0,4);
 		// return {list,count,lately}}
 	},
