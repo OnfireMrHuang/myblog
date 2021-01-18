@@ -6,4 +6,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(Element)
 
+// Vue.use(Notification);
+
 // Vue.use(Element, { locale })

@@ -4,13 +4,13 @@
 	<!-- 左侧文章内容 -->
 	<el-row type="flex" justify="center" class="content-blog">
 		<el-col :span="10">
-			<nuxt-link  v-for="item in list" :key="item._id" :to="{name:'Front-id',params:{id:item._id}}" class="box-href">
+			<nuxt-link  v-for="item in list" :key="item.id" :to="{name:'Front-id',params:{id:item.id}}" class="box-href">
 				<el-card class="box-card" shadow="hover">
 					<h2 class="box-title">{{item.title}}</h2>
 					<div class="box-icon">
-						<span><i class="el-icon-date"></i>&nbsp;{{item.time}}</span>
+						<span><i class="el-icon-date"></i>&nbsp;{{item.created_on}}</span>
 					</div>
-					<div class="box-content">{{item.des}}</div>
+					<div class="box-content">{{item.desc}}</div>
 				</el-card>
 			</nuxt-link>
 			<el-pagination class="pagination" @current-change="pagination" background layout="prev, pager, next" :page-size="5" :total="count" v-show="count >= 5"></el-pagination>
@@ -71,19 +71,9 @@ export default {
 		let json = {page:1,limit:5}
 		let {data} =await app.$axios.get(`${baseurl}/api/v1/articles`,{params:json});
 		let {code,msg,total,list} = data;
-		if(code == 200) {
-			this.$notify({
-				title: '成功',
-				message: '这是一条成功的提示消息',
-				type: 'success'
-			})
-			// app.$notify.info({
-			// 	title: '消息',
-			// 	message: '这是一条消息的提示消息'
-			// });
+		if(code != 200) {
+
 		}
-		// let lately = list.slice(0,4);
-		// return {list,count,lately}}
 	},
 	methods: {
 		pagination(page) {
