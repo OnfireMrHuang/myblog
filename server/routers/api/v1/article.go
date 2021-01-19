@@ -1,20 +1,41 @@
 package v1
 
 import (
-	"github.com/astaxie/beego/validation"
-	"github.com/boombuler/barcode/qr"
-	"github.com/gin-gonic/gin"
-	"github.com/prometheus/common/log"
-	"github.com/unknwon/com"
 	"net/http"
 	"server/models"
 	"server/pkg/app"
 	"server/pkg/e"
 	"server/pkg/qrcode"
-	"server/pkg/setting"
 	"server/pkg/util"
 	"server/service/article_service"
+	"time"
+
+	"github.com/astaxie/beego/validation"
+	"github.com/boombuler/barcode/qr"
+	"github.com/gin-gonic/gin"
+	"github.com/prometheus/common/log"
+	"github.com/unknwon/com"
 )
+
+type ArticleBrief struct {
+	ID    int64  `json:"id"`
+	Title string `json:"title"`
+	Time  string `json:"time"`
+	Des   string `json:"des"`
+}
+
+func articleBrief(articles []models.Article) []ArticleBrief {
+	var briefs []ArticleBrief
+	for _, article := range articles {
+		briefs = append(briefs, ArticleBrief{
+			ID:    int64(article.ID),
+			Title: article.Title,
+			Des:   article.Desc,
+			Time:  time.Unix(int64(article.ModifiedOn), 0).Format("2006-01-02 15:04:05"),
+		})
+	}
+	return briefs
+}
 
 // @Summary Get a single article
 // @Produce  json
@@ -65,13 +86,13 @@ func GetArticle(c *gin.Context) {
 func GetArticles(c *gin.Context) {
 	maps := make(map[string]interface{}) // 暂时不做任何筛选
 	code := e.SUCCESS
-	articles := models.GetArticles(util.GetPage(c), setting.AppSetting.PageSize, maps)
+	articles := models.GetArticles(util.GetPage(c), util.GetLimit(c), maps)
 	total := models.GetArticleTotal(maps)
 
 	c.JSON(http.StatusOK, gin.H{
 		"code":  code,
 		"msg":   e.GetMsg(code),
-		"list":  articles,
+		"list":  articleBrief(articles),
 		"total": total,
 	})
 }

@@ -2,6 +2,7 @@ package routers
 
 import (
 	_ "server/docs"
+	"server/middleware/cors"
 	"server/middleware/jwt"
 	"server/pkg/setting"
 	"server/routers/api"
@@ -19,6 +20,7 @@ func InitRouter() *gin.Engine {
 	r.GET("/auth", api.GetAuth)
 	apiV1 := r.Group("/api/v1")
 	apiV1.Use(jwt.JWT())
+	apiV1.Use(cors.Cors())
 	{
 		// 获取标签列表
 		apiV1.GET("/tags", v1.GetTags)

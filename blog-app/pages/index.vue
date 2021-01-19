@@ -4,13 +4,13 @@
 	<!-- 左侧文章内容 -->
 	<el-row type="flex" justify="center" class="content-blog">
 		<el-col :span="10">
-			<nuxt-link  v-for="item in list" :key="item.id" :to="{name:'Front-id',params:{id:item.id}}" class="box-href">
+			<nuxt-link  v-for="item in list" :key="item.id" :to="{name:'front-id',params:{id:item.id}}" class="box-href">
 				<el-card class="box-card" shadow="hover">
 					<h2 class="box-title">{{item.title}}</h2>
 					<div class="box-icon">
-						<span><i class="el-icon-date"></i>&nbsp;{{item.created_on}}</span>
+						<span><i class="el-icon-date"></i>&nbsp;{{item.time}}</span>
 					</div>
-					<div class="box-content">{{item.desc}}</div>
+					<div class="box-content">{{item.des}}</div>
 				</el-card>
 			</nuxt-link>
 			<el-pagination class="pagination" @current-change="pagination" background layout="prev, pager, next" :page-size="5" :total="count" v-show="count >= 5"></el-pagination>
@@ -72,16 +72,25 @@ export default {
 		let {data} =await app.$axios.get(`${baseurl}/api/v1/articles`,{params:json});
 		let {code,msg,total,list} = data;
 		if(code != 200) {
-
+			console.log("错误信息: ",msg)
+			return {}
 		}
+		return {list: list,count:total}
 	},
 	methods: {
 		pagination(page) {
-			// let json = {page,pagesize:5}
-			// this.$axios.get(`${baseurl}/api/article/getFrontArticle`,{params:json}).then(res=>{
-			// 	let {error,count,list} = res.data;
-			// 	this.list =list;
-			// });
+			let json = {page,limit:5}
+			this.$axios.get(`${baseurl}/api/v1/articles`,{params:json},{headers: { 'Access-Control-Allow-Origin': '*' }}).then(res=>{
+				let {code,msg,total,list} = res.data;
+				if(code != 200) {
+					console.log("查询分页报错: ",msg)
+					return 
+				}
+				console.log(total)
+				console.log(list)
+				this.count = total
+				this.list =list;
+			});
 		}
 	},
 	components: {
