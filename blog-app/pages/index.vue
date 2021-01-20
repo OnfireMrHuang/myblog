@@ -4,7 +4,7 @@
 	<!-- 左侧文章内容 -->
 	<el-row type="flex" justify="center" class="content-blog">
 		<el-col :span="10">
-			<nuxt-link  v-for="item in list" :key="item.id" :to="{name:'front-id',params:{id:item.id}}" class="box-href">
+			<nuxt-link  v-for="item in list" :key="item.id" :to="{name:'article-id',params:{id:item.id}}" class="box-href">
 				<el-card class="box-card" shadow="hover">
 					<h2 class="box-title">{{item.title}}</h2>
 					<div class="box-icon">

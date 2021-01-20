@@ -56,9 +56,12 @@ func (a *Article) Edit() error {
 }
 
 func (a *Article) Get() (*models.Article, error) {
+
 	var cacheArticle *models.Article
 
+	// 首先从缓存读取
 	cache := cache_service.Article{ID: a.ID}
+
 	key := cache.GetArticleKey()
 	if gredis.Exists(key) {
 		data, err := gredis.Get(key)
@@ -70,6 +73,7 @@ func (a *Article) Get() (*models.Article, error) {
 		}
 	}
 
+	// 缓存不存在则从数据库读取
 	article, err := models.GetArticle(a.ID)
 	if err != nil {
 		return nil, err
@@ -113,8 +117,7 @@ func (a *Article) Delete() error {
 }
 
 func (a *Article) ExistByID() (bool, error) {
-	return false, nil
-	//return models.ExistArticleByID(a.ID)
+	return models.ExistArticleByID(a.ID), nil
 }
 
 func (a *Article) Count() (int, error) {

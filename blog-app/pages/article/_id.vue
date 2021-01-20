@@ -4,7 +4,7 @@
       <el-row type="flex" justify="center">
         <el-col :span="14" class="detail_title">
             <div>{{title}}</div>
-            <div class="time">发布时间：{{time}}&nbsp;&nbsp;&nbsp;&nbsp;分类：{{list === 'Front' ? '前端文章' : '后端文章'}}</div>
+            <div class="time">发布时间：{{time}}&nbsp;&nbsp;&nbsp;&nbsp;</div>
         </el-col>
 
       </el-row>
@@ -29,11 +29,17 @@ export default {
         }
 	},
 	async asyncData({app,params}) {
-		let json = {id:params.id}
-		let result = await app.$axios.get(`${baseurl}/api/article/getBackArticleInfo`,{params:json});
-        let {error,info} = result.data;
-        let {content,des,list,time,title} = info[0];
-		return {title,des,content,list,time}
+        // let {result} = await app.$axios.get(`${baseurl}/api/v1/article/${params.id}`);
+        // let {code,msg,data} = result;
+		// if(code != 200) {
+		// 	console.log("错误信息: ",msg)
+		// 	return {}
+        // }
+        let title = "xxxxxxxxxx"
+        let des = "xxxxxxxx"
+        let content = "xxxxxxxxxx"
+        let time = "xxxxxxxxx"
+		return {title,des,content,time}
 	},
     head() {
 		return {

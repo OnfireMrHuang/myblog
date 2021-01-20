@@ -1,8 +1,9 @@
 package app
 
 import (
-	"github.com/gin-gonic/gin"
 	"server/pkg/e"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Gin struct {
