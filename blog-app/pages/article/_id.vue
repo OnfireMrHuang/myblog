@@ -29,16 +29,16 @@ export default {
         }
 	},
 	async asyncData({app,params}) {
-        // let {result} = await app.$axios.get(`${baseurl}/api/v1/article/${params.id}`);
-        // let {code,msg,data} = result;
-		// if(code != 200) {
-		// 	console.log("错误信息: ",msg)
-		// 	return {}
-        // }
-        let title = "xxxxxxxxxx"
-        let des = "xxxxxxxx"
-        let content = "xxxxxxxxxx"
-        let time = "xxxxxxxxx"
+        let {data} = await app.$axios.get(`${baseurl}/api/v1/articles/${params.id}`);
+        // let {code,msg} = data;
+		if(data.code != 200) {
+			console.log("错误信息: ",data.msg)
+			return {}
+        }
+        let title = data.data.title
+        let des = data.data.desc
+        let content = data.data.content
+        let time = data.data.modified_by
 		return {title,des,content,time}
 	},
     head() {

@@ -4,7 +4,7 @@
     <el-row type="flex" justify="center">
       <el-col :span="14" class="detail_title">
           <div>{{title}}</div>
-          <div class="time">发布时间：{{time}}&nbsp;&nbsp;&nbsp;&nbsp;分类：{{list === 'Front' ? '前端文章' : '后端文章'}}</div>
+          <div class="time">发布时间：{{time}}&nbsp;&nbsp;&nbsp;&nbsp;分类: '默认'</div>
       </el-col>
 
     </el-row>
