@@ -9,8 +9,17 @@ type Comment struct {
 	ArticleID int    `json:"article_id"`
 }
 
+func GetCommentTotal(maps interface{}) (count int) {
+	db.Model(&Comment{}).Where(maps).Count(&count)
+	return
+}
+
 func GetComments(pageNum int, pageSize int, maps interface{}) (comments []Comment) {
-	db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&comments)
+	offset := pageSize * (pageNum - 1)
+	if offset < 0 {
+		offset = 0
+	}
+	db.Where(maps).Offset(offset).Limit(pageSize).Find(&comments)
 	return
 }
 

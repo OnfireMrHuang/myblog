@@ -12,28 +12,30 @@ import (
 
 func Comments(c *gin.Context) {
 	appG := app.Gin{C: c}
-	var article struct {
-		ArticleID int `json:"article_id"`
+	commentService := comment_service.Comment{
+		ArticleID: 0,
+		PageNum:   1,
+		PageSize:  20,
 	}
-	err := c.BindJSON(&article)
+	err := c.BindJSON(&commentService)
 	if err != nil {
-		appG.Response(http.StatusOK, e.INVALID_PARAMS, nil)
+		appG.ResponseList(http.StatusOK, e.INVALID_PARAMS, 0, nil)
 	}
-	articleID := article.ArticleID
+	articleID := commentService.ArticleID
 	valid := validation.Validation{}
 	valid.Min(articleID, 1, "id").Message("ID必须大于0")
 	if valid.HasErrors() {
 		app.MarkErrors(valid.Errors)
-		appG.Response(http.StatusOK, e.INVALID_PARAMS, nil)
+		appG.ResponseList(http.StatusOK, e.INVALID_PARAMS, 0, nil)
 		return
 	}
-	commentService := comment_service.Comment{ArticleID: articleID}
+	count := commentService.Count()
 	comments, err := commentService.GetAll()
 	if err != nil {
-		appG.Response(http.StatusOK, e.ERROR_GET_ARTICLE_FAIL, nil)
+		appG.ResponseList(http.StatusOK, e.ERROR_GET_ARTICLE_FAIL, 0, nil)
 		return
 	}
-	appG.Response(http.StatusOK, e.SUCCESS, comments)
+	appG.ResponseList(http.StatusOK, e.SUCCESS, count, comments)
 }
 
 func AddComment(c *gin.Context) {
@@ -56,7 +58,7 @@ func AddComment(c *gin.Context) {
 func DelComment(c *gin.Context) {
 	appG := app.Gin{C: c}
 
-	id := com.StrTo(c.Param("id"))
+	id := com.StrTo(c.Param("id")).MustInt()
 	valid := validation.Validation{}
 	valid.Min(id, 1, "id").Message("ID必须大于0")
 	if valid.HasErrors() {

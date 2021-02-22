@@ -83,17 +83,24 @@ func GetArticle(c *gin.Context) {
 // @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/articles [get]
 func GetArticles(c *gin.Context) {
-	maps := make(map[string]interface{}) // 暂时不做任何筛选
-	code := e.SUCCESS
-	articles := models.GetArticles(util.GetPage(c), util.GetLimit(c), maps)
-	total := models.GetArticleTotal(maps)
-
-	c.JSON(http.StatusOK, gin.H{
-		"code":  code,
-		"msg":   e.GetMsg(code),
-		"list":  articleBrief(articles),
-		"total": total,
-	})
+	appG := app.Gin{C: c}
+	articleService := article_service.Article{
+		PageNum:  util.GetPage(c),
+		PageSize: util.GetLimit(c),
+		State:    -1,
+		TagID:    -1,
+	}
+	total, err := articleService.Count()
+	if err != nil {
+		appG.ResponseList(http.StatusOK, e.ERROR, 0, nil)
+		return
+	}
+	articles, err := articleService.GetAll()
+	if err != nil {
+		appG.ResponseList(http.StatusOK, e.ERROR, 0, nil)
+		return
+	}
+	appG.ResponseList(http.StatusOK, e.SUCCESS, total, articles)
 }
 
 // @Summary Add article

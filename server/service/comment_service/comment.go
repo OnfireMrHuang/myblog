@@ -11,10 +11,10 @@ type Comment struct {
 	Email     string
 	Content   string
 	IP        string
-	ArticleID int
+	ArticleID int `json:"article_id"`
 
-	PageNum  int
-	PageSize int
+	PageNum  int `json:"page"`
+	PageSize int `json:"limit"`
 }
 
 // 添加评论
@@ -35,6 +35,10 @@ func (c *Comment) Delete() error {
 		return errors.New("删除评论记录失败")
 	}
 	return nil
+}
+
+func (c *Comment) Count() int {
+	return models.GetCommentTotal(c.getMaps())
 }
 
 func (c *Comment) GetAll() ([]models.Comment, error) {

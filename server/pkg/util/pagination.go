@@ -8,6 +8,9 @@ import (
 )
 
 func GetLimit(c *gin.Context) int {
+	if c.Query("limit") == "" {
+		return setting.AppSetting.PageSize
+	}
 	limit, _ := com.StrTo(c.Query("limit")).Int()
 	if limit < 1 {
 		limit = setting.AppSetting.PageSize
@@ -16,6 +19,9 @@ func GetLimit(c *gin.Context) int {
 }
 
 func GetPage(c *gin.Context) int {
+	if c.Query("page") == "" {
+		return 1
+	}
 	result := 0
 	pageSize := GetLimit(c)
 	page, _ := com.StrTo(c.Query("page")).Int()

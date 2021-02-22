@@ -27,7 +27,7 @@ func InitRouter() *gin.Engine {
 		// 添加标签
 		apiV1.POST("/tags", v1.AddTag)
 		// 修改标签
-		apiV1.PUT("/tags/:id", v1.EditTag)
+		apiV1.PUT("/tags", v1.EditTag)
 		// 删除标签
 		apiV1.DELETE("/tags/:id", v1.DeleteTag)
 

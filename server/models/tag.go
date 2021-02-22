@@ -10,7 +10,11 @@ type Tag struct {
 }
 
 func GetTags(pageNum int, pageSize int, maps interface{}) (tags []Tag) {
-	db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&tags)
+	offset := pageSize * (pageNum - 1)
+	if offset < 0 {
+		offset = 0
+	}
+	db.Where(maps).Offset(offset).Limit(pageSize).Find(&tags)
 	return
 }
 
@@ -27,6 +31,7 @@ func ExistTagByName(name string) bool {
 	}
 	return false
 }
+
 func AddTag(name string, state int, createdBy string) bool {
 	db.Create(&Tag{
 		Name:      name,
@@ -36,16 +41,6 @@ func AddTag(name string, state int, createdBy string) bool {
 	return true
 }
 
-//func (tag *Tag) BeforeCreate(scope *gorm.Scope) error {
-//	scope.SetColumn("CreatedOn", time.Now().Unix())
-//	return nil
-//}
-//
-//func (tag *Tag) BeforeUpdate(scope *gorm.Scope) error {
-//	scope.SetColumn("ModifiedOn", time.Now().Unix())
-//	return nil
-//}
-
 func ExistTagByID(id int) bool {
 	var tag Tag
 	db.Select("id").Where("id = ?", id).First(&tag)
@@ -54,10 +49,12 @@ func ExistTagByID(id int) bool {
 	}
 	return false
 }
+
 func DeleteTag(id int) error {
 	db.Where("id = ?", id).Delete(&Tag{})
 	return nil
 }
+
 func EditTag(id int, data interface{}) error {
 	db.Model(&Tag{}).Where("id = ?", id).Updates(data)
 	return nil

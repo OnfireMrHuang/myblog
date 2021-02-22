@@ -2,7 +2,6 @@ package article_service
 
 import (
 	"encoding/json"
-
 	"server/models"
 	"server/pkg/gredis"
 	"server/pkg/logging"
@@ -83,37 +82,13 @@ func (a *Article) Get() (*models.Article, error) {
 	return article, nil
 }
 
-func (a *Article) GetAll() ([]*models.Article, error) {
-	//var (
-	//	articles, cacheArticles []*models.Article
-	//)
-	//
-	//cache := cache_service.Article{
-	//	TagID: a.TagID,
-	//	State: a.State,
-	//
-	//	PageNum:  a.PageNum,
-	//	PageSize: a.PageSize,
-	//}
-	//key := cache.GetArticlesKey()
-	//if gredis.Exists(key) {
-	//	data, err := gredis.Get(key)
-	//	if err != nil {
-	//		logging.Info(err)
-	//	} else {
-	//		json.Unmarshal(data, &cacheArticles)
-	//		return cacheArticles, nil
-	//	}
-	//}
-	return nil, nil
-	//articles := models.GetArticles(a.PageNum, a.PageSize, a.getMaps())
-	//gredis.Set(key, articles, 3600)
-	//return articles, nil
+func (a *Article) GetAll() ([]models.Article, error) {
+	articles := models.GetArticles(a.PageNum, a.PageSize, a.getMaps())
+	return articles, nil
 }
 
 func (a *Article) Delete() error {
 	return nil
-	//return models.DeleteArticle(a.ID)
 }
 
 func (a *Article) ExistByID() (bool, error) {
@@ -121,19 +96,17 @@ func (a *Article) ExistByID() (bool, error) {
 }
 
 func (a *Article) Count() (int, error) {
-	return 0, nil
-	//return models.GetArticleTotal(a.getMaps())
+	total := models.GetArticleTotal(a.getMaps())
+	return total, nil
 }
 
 func (a *Article) getMaps() map[string]interface{} {
 	maps := make(map[string]interface{})
-	maps["deleted_on"] = 0
 	if a.State != -1 {
 		maps["state"] = a.State
 	}
 	if a.TagID != -1 {
 		maps["tag_id"] = a.TagID
 	}
-
 	return maps
 }

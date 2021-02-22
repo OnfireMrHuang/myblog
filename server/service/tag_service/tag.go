@@ -19,22 +19,22 @@ import (
 )
 
 type Tag struct {
-	ID         int
-	Name       string
-	CreatedBy  string
-	ModifiedBy string
-	State      int
+	ID         int    `json:"id"`
+	Name       string `json:"name"`
+	CreatedBy  string `json:"created_by"`
+	ModifiedBy string `json:"modified_by"`
+	State      int    `json:"state"`
 
-	PageNum  int
-	PageSize int
+	PageNum  int `json:"page"`
+	PageSize int `json:"limit"`
 }
 
-func (t *Tag) ExistByName() (bool, error) {
-	return models.ExistTagByName(t.Name), nil
+func (t *Tag) ExistByName() bool {
+	return models.ExistTagByName(t.Name)
 }
 
-func (t *Tag) ExistByID() (bool, error) {
-	return models.ExistTagByID(t.ID), nil
+func (t *Tag) ExistByID() bool {
+	return models.ExistTagByID(t.ID)
 }
 
 func (t *Tag) Add() error {
@@ -48,11 +48,12 @@ func (t *Tag) Add() error {
 func (t *Tag) Edit() error {
 	data := make(map[string]interface{})
 	data["modified_by"] = t.ModifiedBy
-	data["name"] = t.Name
-	if t.State >= 0 {
+	if t.Name != "" {
+		data["name"] = t.Name
+	}
+	if t.State != -1 {
 		data["state"] = t.State
 	}
-
 	return models.EditTag(t.ID, data)
 }
 
@@ -60,8 +61,8 @@ func (t *Tag) Delete() error {
 	return models.DeleteTag(t.ID)
 }
 
-func (t *Tag) Count() (int, error) {
-	return models.GetTagTotal(t.getMaps()),nil
+func (t *Tag) Count() int {
+	return models.GetTagTotal(t.getMaps())
 }
 
 func (t *Tag) GetAll() ([]models.Tag, error) {
@@ -86,7 +87,7 @@ func (t *Tag) GetAll() ([]models.Tag, error) {
 		}
 	}
 
-	tags= models.GetTags(t.PageNum, t.PageSize, t.getMaps())
+	tags = models.GetTags(t.PageNum, t.PageSize, t.getMaps())
 	gredis.Set(key, tags, 3600)
 	return tags, nil
 }
@@ -169,14 +170,11 @@ func (t *Tag) Import(r io.Reader) error {
 
 func (t *Tag) getMaps() map[string]interface{} {
 	maps := make(map[string]interface{})
-	maps["deleted_on"] = 0
-
 	if t.Name != "" {
 		maps["name"] = t.Name
 	}
 	if t.State >= 0 {
 		maps["state"] = t.State
 	}
-
 	return maps
 }
