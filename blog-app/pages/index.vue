@@ -91,7 +91,7 @@ export default {
 				this.count = total
 				this.list =list;
 			});
-		}
+		},
 	},
 	components: {
 		NavHeader,

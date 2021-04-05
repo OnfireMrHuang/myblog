@@ -19,18 +19,18 @@ export default {
   ],
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/axios',
+    // '@/plugins/axios',
   ],
   components: true,
   modules: [
     '@nuxtjs/axios',
   ],
-  axios: {
-    proxy: true
-  },
-  proxy: {
-    "/api": "http:/localhost:3000",
-  },
+  // axios: {
+  //   proxy: true
+  // },
+  // proxy: {
+  //   "/api": "http:/localhost:3000",
+  // },
   build: {
     transpile: [/^element-ui/],
   }

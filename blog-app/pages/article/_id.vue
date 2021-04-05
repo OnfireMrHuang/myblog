@@ -34,9 +34,6 @@
           <el-form-item label="内容" prop="content">
             <el-input type="textarea" :rows="8" v-model="ruleForm.content" autocomplete="off"></el-input>
           </el-form-item>
-          <no-ssr>
-            <geetest :data="param" style="margin:0 0 50px 100px;" @on-success="geetSuccess" @on-error="geetError"></geetest>
-          </no-ssr>
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -66,7 +63,6 @@
 import NavHeader from '~/components/NavHeader.vue';
 import {baseurl} from '~/plugins/url.js';
 import Time from '~/plugins/time'
-import Geetest from '~/components/Geetest.vue'
 export default {
 	data() {
       var checkUsername = (rule, value, callback) => {
@@ -117,7 +113,6 @@ export default {
         pass: ''
       },
       param: {
-        baseUrl: `${baseurl}/api/geet`,
         product: 'float'
       },
       geetValidate: null,
@@ -142,30 +137,16 @@ export default {
     }
 	},
 	async asyncData({app,params}) {
-        let {data} = await app.$axios.get(`${baseurl}/api/v1/articles/${params.id}`);
-		if(data.code != 200) {
-            console.log("错误信息: ",data.msg)
-			return {}
+      let {data} = await app.$axios.get(`${baseurl}/api/v1/articles/${params.id}`);
+		  if(data.code != 200) {
+          console.log("错误信息: ",data.msg)
+          return {}
         }
-        let title = data.data.title
-        let des = data.data.desc
-        let content = data.data.content
-        let time = data.data.modified_by
-		return {title,des,content,time}
-    },
-    head() {
-		return {
-			title:this.title,
-            meta:[
-				{hid:'description',name:'description',content:`${this.des}`},
-				{hid:'author',content:'brian'}
-			]
-		}
-	},
-   components:{
-    NavHeader,
-    Time,
-    Geetest
+      let title = data.data.title
+      let des = data.data.desc
+      let content = data.data.content
+      let time = data.data.modified_by
+		  return {title,des,content,time}
   },
   created () {
     this.commentLists(this.$route.params.id)
@@ -224,15 +205,15 @@ export default {
       }
     },
     async commentLists (id) {
-      try {
-        let {data: {count, result}} = await this.$axios.post(`${baseurl}/api/v1/comments`, {id})
-        /*数组暂时倒序*/
-        this.count = count
-        this.commentList = result.comment.reverse()
-        this.author = data.author
-      } catch (error) {
-        // handle error
-      }
+      // try {
+      //   let {data: {count, result}} = await this.$axios.post(`${baseurl}/api/v1/comments`, {article_id:id})
+      //   /*数组暂时倒序*/
+      //   this.count = count
+      //   this.commentList = result.comment.reverse()
+      //   this.author = data.author
+      // } catch (error) {
+      //   // handle error
+      // }
     },
     pagination(page) {
       console.log(page)
@@ -241,18 +222,19 @@ export default {
       this.authorStatus = this.author.includes(val)
       console.log(`status:${this.authorStatus}`)
     },
-    async geetSuccess (result) {
-      try {
-        this.geetValidate = result
-      } catch (e) {
-        this.$notify({
-          title: '未知错误',
-          message: `发生错误：${e}`,
-          type: 'error'
-        })
-      }
-    },
-    geetError () {}
+  },
+  head() {
+		return {
+			title:this.title,
+            meta:[
+				{hid:'description',name:'description',content:`${this.des}`},
+				{hid:'author',content:'brian'}
+			]
+		}
+	},
+  components:{
+    NavHeader,
+    Time,
   }
 }
 </script>
